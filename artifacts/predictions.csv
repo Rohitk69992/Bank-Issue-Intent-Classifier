@@ -1,0 +1,4 @@
+query,cleaned_query,predicted_intent,confidence_score,timestamp
+i did not receive my refund,i did not receive my refund,Refund_not_showing_up,0.6518,2026-05-15 20:30:40.134768
+my account verification failed,my account verification failed,terminate_account,0.1934,2026-05-15 20:56:10.898222
+my card payment failed online,my card payment failed online,declined_card_payment,0.3987,2026-05-15 20:57:33.393566

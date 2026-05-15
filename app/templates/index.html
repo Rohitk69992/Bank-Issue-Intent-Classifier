@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>
+        AI Banking Support System
+    </title>
+
+    <link
+        rel="stylesheet"
+        href="{{ url_for('static', filename='style.css') }}"
+    >
+
+</head>
+
+<body>
+
+    <div class="container">
+
+        <h1>
+            AI Banking Support System
+        </h1>
+
+        <!-- ========================= -->
+        <!-- QUERY FORM -->
+        <!-- ========================= -->
+
+        <form method="POST">
+
+            <textarea
+                name="query"
+                placeholder="Describe your banking issue..."
+                required
+            ></textarea>
+
+            <button type="submit">
+
+                Detect Banking Issue
+
+            </button>
+
+        </form>
+
+
+        <!-- ========================= -->
+        <!-- RESULTS -->
+        <!-- ========================= -->
+
+        {% if result %}
+
+        <div class="result-box">
+
+            <h2>
+
+                Detected Banking Issue
+
+            </h2>
+
+            <div class="intent-result">
+
+                {{ result.display_intent }}
+
+            </div>
+
+        </div>
+
+        {% endif %}
+
+    </div>
+
+</body>
+
+</html>
