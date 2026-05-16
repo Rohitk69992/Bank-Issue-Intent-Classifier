@@ -19,7 +19,8 @@ DATABASE_URL = os.getenv("DATABASE_URL")
 def get_connection():
 
     return psycopg2.connect(
-        DATABASE_URL
+        DATABASE_URL,
+        sslmode="require"
     )
 
 
@@ -47,7 +48,7 @@ def create_prediction_table():
 
             confidence_score REAL,
 
-            timestamp TEXT
+            timestamp TIMESTAMP
 
         )
 
@@ -55,6 +56,7 @@ def create_prediction_table():
 
     connection.commit()
 
+    cursor.close()
     connection.close()
 
 
@@ -78,9 +80,7 @@ def save_prediction(
 
     cursor = connection.cursor()
 
-    current_timestamp = str(
-        datetime.now()
-    )
+    current_timestamp = datetime.now()
 
     cursor.execute("""
 
@@ -116,6 +116,7 @@ def save_prediction(
 
     connection.commit()
 
+    cursor.close()
     connection.close()
 
 
@@ -138,6 +139,7 @@ def fetch_all_predictions():
 
     records = cursor.fetchall()
 
+    cursor.close()
     connection.close()
 
     return records
