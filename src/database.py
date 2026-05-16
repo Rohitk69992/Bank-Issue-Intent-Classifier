@@ -4,16 +4,23 @@
 
 import csv
 import os
-import sqlite3
+import psycopg2
 
 from datetime import datetime
 
 
 # =====================================
-# DATABASE PATH
+# DATABASE CONNECTION
 # =====================================
 
-DATABASE_PATH = "database/predictions.db"
+DATABASE_URL = os.getenv("DATABASE_URL")
+
+
+def get_connection():
+
+    return psycopg2.connect(
+        DATABASE_URL
+    )
 
 
 # =====================================
@@ -22,14 +29,7 @@ DATABASE_PATH = "database/predictions.db"
 
 def create_prediction_table():
 
-    os.makedirs(
-        "database",
-        exist_ok=True
-    )
-
-    connection = sqlite3.connect(
-        DATABASE_PATH
-    )
+    connection = get_connection()
 
     cursor = connection.cursor()
 
@@ -37,7 +37,7 @@ def create_prediction_table():
 
         CREATE TABLE IF NOT EXISTS predictions (
 
-            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            id SERIAL PRIMARY KEY,
 
             query TEXT,
 
@@ -59,7 +59,7 @@ def create_prediction_table():
 
 
 # =====================================
-# SAVE TO SQLITE
+# SAVE TO DATABASE
 # =====================================
 
 def save_prediction(
@@ -74,9 +74,7 @@ def save_prediction(
 
 ):
 
-    connection = sqlite3.connect(
-        DATABASE_PATH
-    )
+    connection = get_connection()
 
     cursor = connection.cursor()
 
@@ -100,7 +98,7 @@ def save_prediction(
 
         )
 
-        VALUES (?, ?, ?, ?, ?)
+        VALUES (%s, %s, %s, %s, %s)
 
     """, (
 
@@ -127,15 +125,14 @@ def save_prediction(
 
 def fetch_all_predictions():
 
-    connection = sqlite3.connect(
-        DATABASE_PATH
-    )
+    connection = get_connection()
 
     cursor = connection.cursor()
 
     cursor.execute("""
 
         SELECT * FROM predictions
+        ORDER BY id DESC
 
     """)
 
@@ -187,9 +184,7 @@ def save_prediction_to_csv(
 
         writer = csv.writer(file)
 
-        # ----------------------------
         # HEADER
-        # ----------------------------
 
         if not file_exists:
 
@@ -207,9 +202,7 @@ def save_prediction_to_csv(
 
             ])
 
-        # ----------------------------
         # DATA ROW
-        # ----------------------------
 
         writer.writerow([
 

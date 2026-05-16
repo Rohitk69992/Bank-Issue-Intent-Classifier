@@ -137,26 +137,6 @@ def home():
 
     )
 
-
-# =====================================
-# HISTORY ROUTE
-# =====================================
-
-@app.route("/history")
-
-def history():
-
-    records = fetch_all_predictions()
-
-    return render_template(
-
-        "history.html",
-
-        records=records
-
-    )
-
-
 # =====================================
 # RUN FLASK APP
 # =====================================
