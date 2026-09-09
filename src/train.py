@@ -2,6 +2,7 @@
 # IMPORTS
 # =====================================
 
+import json
 import os
 import joblib
 import pandas as pd
@@ -17,11 +18,9 @@ from sklearn.metrics import accuracy_score
 from src.preprocessing import clean_text
 
 from src.config import (
-
     MODEL_PATH,
-
-    VECTORIZER_PATH
-
+    VECTORIZER_PATH,
+    LABEL_MAPPING_PATH
 )
 
 
@@ -136,6 +135,34 @@ joblib.dump(
 joblib.dump(
     vectorizer,
     VECTORIZER_PATH
+)
+
+# =====================================
+# SAVE LABEL MAPPING
+# =====================================
+
+label_mapping = dict(
+    zip(
+        train_df["label"],
+        train_df["label_text"]
+    )
+)
+
+with open(
+    LABEL_MAPPING_PATH,
+    "w",
+    encoding="utf-8"
+) as f:
+
+    json.dump(
+        label_mapping,
+        f,
+        indent=4,
+        ensure_ascii=False
+    )
+
+print(
+    "Label mapping saved successfully."
 )
 
 print(
