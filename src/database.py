@@ -17,12 +17,16 @@ DATABASE_URL = os.getenv("DATABASE_URL")
 
 
 def get_connection():
+    if os.getenv("VERCEL"):
+        return psycopg2.connect(
+            DATABASE_URL,
+            sslmode="require"
+        )
 
     return psycopg2.connect(
         DATABASE_URL,
-        sslmode="require"
+        sslmode="disable"
     )
-
 
 # =====================================
 # CREATE TABLE
