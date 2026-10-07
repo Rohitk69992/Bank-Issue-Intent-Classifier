@@ -8,31 +8,12 @@ from flask import request
 
 from src.inference import predict_top_k_intents
 
-from src.database import (
-
-    create_prediction_table,
-
-    save_prediction,
-
-    fetch_all_predictions,
-
-    save_prediction_to_csv
-
-)
-
 
 # =====================================
 # CREATE FLASK APP
 # =====================================
 
 app = Flask(__name__)
-
-
-# =====================================
-# CREATE DATABASE TABLE
-# =====================================
-
-create_prediction_table()
 
 
 # =====================================
@@ -65,10 +46,6 @@ def home():
                 "intent"
             ]
 
-            confidence_score = top_prediction[
-                "confidence_score"
-            ]
-
             # ---------------------------------
             # USER DISPLAY INTENT
             # ---------------------------------
@@ -84,42 +61,6 @@ def home():
             prediction_result[
                 "display_intent"
             ] = display_intent
-
-            # ---------------------------------
-            # SAVE TO SQLITE DATABASE
-            # ---------------------------------
-
-            save_prediction(
-
-                query=query,
-
-                cleaned_query=prediction_result[
-                    "cleaned_query"
-                ],
-
-                predicted_intent=top_intent,
-
-                confidence_score=confidence_score
-
-            )
-
-            # ---------------------------------
-            # SAVE TO CSV
-            # ---------------------------------
-
-            save_prediction_to_csv(
-
-                query=query,
-
-                cleaned_query=prediction_result[
-                    "cleaned_query"
-                ],
-
-                predicted_intent=top_intent,
-
-                confidence_score=confidence_score
-
-            )
 
             # ---------------------------------
             # TERMINAL LOGGING

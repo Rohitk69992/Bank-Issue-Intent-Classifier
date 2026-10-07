@@ -1,6 +1,6 @@
 # Bank Issue Intent Classifier
 
-An end-to-end NLP-powered banking issue detection system built using TF-IDF and Logistic Regression. The application classifies customer banking queries into predefined intent categories through a Flask web application and stores predictions for monitoring and analysis.
+An end-to-end NLP-powered banking issue detection system built using TF-IDF and Logistic Regression. The application classifies customer banking queries into predefined intent categories through a Flask web application.
 
 ---
 
@@ -15,7 +15,6 @@ The system:
 * Converts text into numerical vectors using TF-IDF
 * Predicts the most likely banking intent using Logistic Regression
 * Displays predictions through a Flask frontend
-* Stores prediction history in SQLite database and CSV logs
 * Can be deployed publicly using Render
 
 ---
@@ -26,8 +25,6 @@ The system:
 * TF-IDF feature engineering
 * Logistic Regression intent prediction
 * Flask-based frontend and backend
-* SQLite database logging
-* CSV prediction history export
 * Modular project structure
 * Deployment-ready architecture
 * Top-K prediction confidence scores
@@ -56,7 +53,6 @@ The system:
 ## Backend
 
 * Flask
-* SQLite
 
 ## Frontend
 
@@ -98,28 +94,20 @@ Bank-Issue-Intent-Classifier/
 │   │   └── style.css
 │   │
 │   ├── templates/
-│   │   ├── index.html
-│   │   └── history.html
+│   │   └── index.html
 │   │
 │   └── app.py
-│
-├── artifacts/
-│   └── predictions.csv
-│
-├── database/
-│   └── predictions.db
 │
 ├── models/
 │   ├── logistic_regression.pkl
 │   ├── tfidf_vectorizer.pkl
-│   └── label_mapping.pkl
+│   └── label_mapping.json
 │
 ├── src/
 │   ├── config.py
 │   ├── preprocessing.py
 │   ├── train.py
-│   ├── inference.py
-│   └── database.py
+│   └── inference.py
 │
 ├── requirements.txt
 ├── runtime.txt
@@ -180,7 +168,6 @@ The deployed inference system:
 * Vectorizes text using saved TF-IDF vectorizer
 * Predicts probabilities
 * Returns Top-K intent predictions
-* Stores predictions in SQLite + CSV
 
 ---
 
@@ -290,23 +277,6 @@ GitHub → Render → Public URL
 
 ---
 
-# Database Logging
-
-Each prediction stores:
-
-* user query
-* cleaned query
-* predicted intent
-* confidence score
-* timestamp
-
-Stored in:
-
-* SQLite database
-* CSV prediction logs
-
----
-
 # Future Improvements
 
 Potential upgrades:
@@ -333,10 +303,7 @@ This project demonstrates:
 * Flask backend development
 * ML inference engineering
 * Model serialization
-* Database integration
 * Cloud deployment workflow
 * Git and GitHub integration
 
 ---
-
-
